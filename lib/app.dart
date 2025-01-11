@@ -14,7 +14,7 @@ class _MainAppState extends State<MainApp> {
       bottomNavigationBar: BottomNavigationBar(
           fixedColor: Colors.blue,
           selectedIconTheme: IconThemeData(color: Colors.blue),
-          selectedLabelStyle: TextStyle(color: Colors.blue),
+          selectedLabelStyle: TextStyle(color: Colors.amber),
           unselectedIconTheme: IconThemeData(color: Colors.grey),
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
