@@ -22,6 +22,7 @@ class _SignInViewState extends State<SignInView> {
 
     return Scaffold(
         appBar: AppBar(
+          leading: const Text(''),
           elevation: 10.0,
           backgroundColor: Colors.amber,
           title: const Text('Login View'),
