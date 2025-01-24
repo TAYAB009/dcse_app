@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_app/ui/views/auth/singup.dart';
 import 'package:first_app/ui/views/home/home_view.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,13 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  void SignInUser(String email, String password) async {
+    UserCredential userCredential =
+        await auth.signInWithEmailAndPassword(email: email, password: password);
+    print(userCredential.user);
+  }
+
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   bool isShowText = false;
@@ -71,11 +79,16 @@ class _SignInViewState extends State<SignInView> {
               const SizedBox(height: 20.0),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return HomeView();
-                      },
-                    ));
+                    SignInUser(emailController.text.trim(),
+                        passwordController.text.trim());
+                    if (auth.currentUser != null) {
+                      print('===========User is not null============');
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return HomeView();
+                        },
+                      ));
+                    }
                   },
                   child: const Text('LogIn')),
 

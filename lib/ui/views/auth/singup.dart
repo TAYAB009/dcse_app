@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_app/ui/views/auth/signin.dart';
 import 'package:first_app/ui/views/home/home_view.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,14 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  final auth = FirebaseAuth.instance;
+
+  void signUpUser(String email, String password) async {
+    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    print(userCredential.user);
+  }
+
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   bool isShowText = false;
@@ -71,47 +80,9 @@ class _SignUpViewState extends State<SignUpView> {
               const SizedBox(height: 20.0),
               ElevatedButton(
                   onPressed: () {
-                    if (emailController.text != '' &&
-                        emailController.text.isNotEmpty &&
-                        passwordController.text != '' &&
-                        passwordController.text.isNotEmpty) {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return HomeView();
-                        },
-                      ));
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('Error!'),
-                            content:
-                                Text('Email and Password must be provided'),
-                            actions: [
-                              // TextButton(
-                              //     onPressed: () {
-                              //       Navigator.of(context).pop();
-                              //     },
-                              //     child: const Text('No')),
-                              // TextButton(
-                              //     onPressed: () {
-                              //       Navigator.of(context).pop();
-                              //     },
-                              //     child: const Text(
-                              //       'Yes',
-                              //       style: TextStyle(color: Colors.red),
-                              //     )),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Ok'))
-                            ],
-                          );
-                        },
-                      );
-                    }
+                    print('=================Creating User=================');
+                    signUpUser(emailController.text, passwordController.text);
+                    print('=================User Created=================');
                   },
                   child: const Text('Sign up')),
               const SizedBox(height: 20.0),
